@@ -57,6 +57,7 @@ void UStatsComponent::ReduceStamina(float amount)
 
 	CanRegen = false;
 
+	
 	FLatentActionInfo FuncInfo
 	{
 		0,
@@ -65,6 +66,7 @@ void UStatsComponent::ReduceStamina(float amount)
 		this
 	};
 
+	//Delay to enable regen
 	UKismetSystemLibrary::RetriggerableDelay(
 		GetWorld(), 
 		StaminaDelayDuration , 

@@ -43,6 +43,7 @@ void ULockonComponent::StartLockon(float radius)
 		OwnerRef
 	};
 
+	//Check if there is a target within the radius of the projected sphere
 	bool hasFoundTarget = GetWorld()->SweepSingleByChannel(
 		OutResult,
 		CurrentLocation,
@@ -57,6 +58,7 @@ void ULockonComponent::StartLockon(float radius)
 
 	if (!OutResult.GetActor()->Implements<UEnemy>()) return;
 	
+	//Lock on to the target by setting the current actor's rotation looking at the target
 	CurrentTargetActor = OutResult.GetActor();
 	ControllerRef->SetIgnoreLookInput(true);
 	MovementComp->bOrientRotationToMovement = false;
@@ -74,6 +76,7 @@ void ULockonComponent::EndLockon()
 	if(CurrentTargetActor->Implements<UEnemy>())	
 		IEnemy::Execute_OnDeselect(CurrentTargetActor);
 
+	//Reset the current actor
 	CurrentTargetActor = nullptr;
 	ControllerRef->ResetIgnoreLookInput();
 	MovementComp->bOrientRotationToMovement = true;
@@ -105,6 +108,7 @@ void ULockonComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 
 	double PlayerDistanceToTarget{ FVector::Distance(CurrentLocation, TargetLocation) };
 
+	//If the player is too far from the target, end the lockon
 	if (PlayerDistanceToTarget > BreakDistance)
 	{
 		EndLockon();

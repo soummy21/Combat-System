@@ -61,6 +61,7 @@ void UTraceComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 	};
 
 
+	//Create a box sweep to check for hits
 	bool HasFoundTargets = GetWorld()->SweepMultiByChannel(
 		OutResults,
 		StartSocketLocation,
@@ -86,6 +87,7 @@ void UTraceComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 
 	FDamageEvent TargetAttackedEvent;
 
+	//For each hit, damage the target
 	for (const FHitResult& Hit: OutResults)
 	{
 		AActor* TargetActor{ Hit.GetActor() };

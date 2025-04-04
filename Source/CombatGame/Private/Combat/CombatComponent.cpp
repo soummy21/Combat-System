@@ -18,12 +18,15 @@ void UCombatComponent::ComboAttack()
 
 	if (!CanAttack) return;
 
+	
 	CanAttack = false;
+
+	//Play the attack animation from the combo montage
 	CharacterRef->PlayAnimMontage(AttackAnimations[ComboCounter]);
 	ComboCounter++;
 
 	int MaxCombo{ AttackAnimations.Num() };
-
+	
 	ComboCounter = UKismetMathLibrary::Wrap(ComboCounter, -1, MaxCombo - 1);
 
 	//Broadcast the event saying the attack has been performed
